@@ -1,0 +1,122 @@
+{% extends 'engineer_basic.html' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Order List
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Name</th>
+                    <th>Order Amount</th>
+                    <th>Order Date</th>
+                    <th>Template</th>
+                    <th>Supplier</th>
+                    <th>Order Status</th>
+                    <th>Order File</th>
+                    <th>Creator</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in order_list %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.order_name }}</td>
+                        <td>{{ order.order_amount }}</td>
+                        <td>{{ order.order_date }}</td>
+                        <td>{{ order.template }}</td>
+                        <td>{{ order.supplier }}</td>
+                        <td>
+                            {% if order.order_status == 1 %}
+                                NEW
+                            {% elif order.order_status == 2 %}
+                                READY
+                            {% elif order.order_status == 3 %}
+                                QUOTE
+                            {% elif order.order_status == 4 %}
+                                MANUFACTURE
+                            {% elif order.order_status == 5 %}
+                                WAITING
+                            {% elif order.order_status == 6 %}
+                                FINISH
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if order.order_file %}
+                                <a href="/engineer/download-file?oid={{ order.id }}" target="_blank">File</a>
+                            {% else %}
+                                No document
+                            {% endif %}
+                        </td>
+                        <td>
+                            {{ order.creator }}
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default">
+                                    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="btn btn-default btn-xs"
+                                           href="/engineer/order/order-detail?oid={{ order.id }}">Order detail
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-default btn-xs"
+                                           href="/engineer/order/start-quote?oid={{ order.id }}"
+                                           {% if order.order_status != 2 %}disabled="disabled"{% endif %}>
+                                            Start quote
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-default btn-xs"
+                                           href="/engineer/order/order-bid-list?oid={{ order.id }}"
+                                           {% if order.order_status <= 2 %}disabled="disabled"{% endif %}>
+                                            Bid list
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="btn btn-default btn-xs"
+                                           href="/engineer/order/finish-quote?oid={{ order.id }}"
+                                           {% if order.order_status != 3 %}disabled="disabled"{% endif %}>
+                                            Finish quote
+                                        </a>
+                                    </li>
+                                    <li role="separator" class="divider"></li>
+                                    <li>
+                                        <a class="btn btn-success btn-xs"
+                                           href="/engineer/order/finish-order?oid={{ order.id }}"
+                                           {% if order.order_status != 5 %}disabled="disabled"{% endif %}>
+                                            Approve
+                                        </a>
+                                        <a class="btn btn-danger btn-xs"
+                                           href="/engineer/order/deny-order?oid={{ order.id }}"
+                                           {% if order.order_status != 5 %}disabled="disabled"{% endif %}>
+                                            Deny
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

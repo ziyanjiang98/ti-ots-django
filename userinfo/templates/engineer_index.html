@@ -1,0 +1,69 @@
+{% extends 'engineer_basic.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h3>Dashboard</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                User
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a class="list-group-item" href="/engineer/userinfo/user-list?type=engineer">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    Engineer list
+                </a>
+                <a class="list-group-item" href="/engineer/userinfo/user-list?type=supplier">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    Supplier list
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>
+                Template
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a class="list-group-item" href="/engineer/order/create-template">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    Create template
+                </a>
+                <a class="list-group-item" href="/engineer/order/template-list">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    Template list
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+                Order
+            </h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a class="list-group-item" href="/engineer/order/create-order">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    Create order
+                </a>
+                <a class="list-group-item" href="/engineer/order/order-list">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    Order list
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

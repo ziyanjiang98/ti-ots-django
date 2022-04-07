@@ -1,0 +1,41 @@
+{% extends 'engineer_basic.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block css %}
+    <style>
+        .panel-body{
+            height: 50%;
+            width: 50%;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="jumbotron">
+        <h1>Welcome to OTS!</h1>
+        <p>This is a web application demo based on Django</p>
+        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Login</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                    {{ field.label }}
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="alert alert-danger" role="alert">{{ field.errors }}</div>
+                    {% endif %}
+                {% endfor %}
+                <br/>
+                <input class="btn btn-success" type="submit" value="Login">
+            </form>
+            <a href="/engineer/register/">Create an engineer account?</a><br>
+            <a href="/supplier/register/">Create a supplier account?</a>
+        </div>
+    </div>
+{% endblock %}

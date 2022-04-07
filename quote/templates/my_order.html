@@ -1,0 +1,73 @@
+{% extends 'supplier_basic.html' %}
+
+{% block title %}My Order{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                My Order
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Name</th>
+                    <th>Order Amount</th>
+                    <th>Order Date</th>
+                    <th>Order Status</th>
+                    <th>Template</th>
+                    <th>Order File</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in combined_list %}
+                    <tr>
+                        <td>{{ item.0.id }}</td>
+                        <td>{{ item.0.order_name }}</td>
+                        <td>{{ item.0.order_amount }}</td>
+                        <td>{{ item.0.order_date }}</td>
+                        <td>
+                            {% if item.0.order_status == 1 %}
+                                NEW
+                            {% elif item.0.order_status == 2 %}
+                                READY
+                            {% elif item.0.order_status == 3 %}
+                                QUOTE
+                            {% elif item.0.order_status == 4 %}
+                                MANUFACTURE
+                            {% elif item.0.order_status == 5 %}
+                                WAITING
+                            {% elif item.0.order_status == 6 %}
+                                FINISH
+                            {% endif %}</td>
+                        <td>
+                            {{ item.0.template.template_json }}
+                        </td>
+                        <td>
+                            {% if item.0.order_file %}
+                                <a href="/supplier/download-file?oid={{ item.0.id }}" target="_blank">File</a>
+                            {% else %}
+                                No document
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form method="post" action="/supplier/quote/upload-file/" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ item.1.order_file }}{{ item.1.order_fiel.errors }}
+                                {{ item.1.order_id }}
+                                <input class="btn btn-primary btn-xs" type="submit" value="Upload">
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <span style="color: grey; text-align: center">Warning: PDF file name should only contain order ID</span>
+    </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'engineer_basic.html' %}
+
+{% block title %}Template List{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Template List
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Template Name</th>
+                    <th>Template Json</th>
+                    <th>Creator</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for template in template_list %}
+                    <tr>
+                        <th scope="row">{{ template.id }}</th>
+                        <td>{{ template.template_name }}</td>
+                        <td>{{ template.template_json }}</td>
+                        <td>{{ template.creator }}</td>
+                        <td>
+                            <a class="btn btn-danger btn-xs" href="/engineer/order/delete-template?tid={{ template.id }}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

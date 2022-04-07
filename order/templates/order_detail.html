@@ -1,0 +1,151 @@
+{% extends 'engineer_basic.html' %}
+
+{% block title %}Order Detail{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+            Order Detail
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order Name</th>
+                <th>Order Amount</th>
+                <th>Order Date</th>
+                <th>Template</th>
+                <th>Supplier</th>
+                <th>Order Status</th>
+                <th>Order File</th>
+                <th>Creator</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">{{ order.id }}</th>
+                <td>{{ order.order_name }}</td>
+                <td>{{ order.order_amount }}</td>
+                <td>{{ order.order_date }}</td>
+                <td>{{ order.template }}</td>
+                <td>{{ order.supplier }}</td>
+                <td>
+                    {% if order.order_status == 1 %}
+                        NEW
+                    {% elif order.order_status == 2 %}
+                        READY
+                    {% elif order.order_status == 3 %}
+                        QUOTE
+                    {% elif order.order_status == 4 %}
+                        MANUFACTURE
+                    {% elif order.order_status == 5 %}
+                        FAIL
+                    {% elif order.order_status == 6 %}
+                        FINISH
+                    {% endif %}
+                </td>
+                <td>
+                    {% if order.order_file %}
+                        <a href="/engineer/download-file?oid={{ order.id }}" target="_blank">File</a>
+                    {% else %}
+                        No document
+                    {% endif %}
+                </td>
+                <td>{{ order.creator }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-oil" aria-hidden="true"></span>
+            Template Info
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Template Name</th>
+                <th>Template Content</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">{{ order.template.id }}</th>
+                <td>{{ order.template.template_name }}</td>
+                <td>{{ order.template.template_json }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+            Candidate List
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for candidate in candidate_list %}
+                    <tr>
+                        <th scope="row">{{ candidate.id }}</th>
+                        <td>{{ candidate.username }}</td>
+                        <td>{{ candidate.email }}</td>
+                        <td>
+                            <a class="btn btn-danger btn-xs"
+                               href="/engineer/order/delete-candidate?oid={{ order.id }}&sid={{ candidate.id }}">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            Add
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" method="post" action="/engineer/order/add-candidate/">
+                {% csrf_token %}
+                <input type="hidden" name="oid" value="{{ order.id }}">
+                <div class="form-group">
+                    <label for="supplierSelect" class="col-sm-2 control-label">Select a candidate</label>
+                    <div class="col-sm-10">
+                        <select class="form-control" name="sid">
+                            {% for supplier in supplier_list %}
+                                <option value="{{ supplier.id }}">id:{{ supplier.id }}|
+                                    name:{{ supplier.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        {% if order.order_status > 2 %}
+                            <button type="submit" class="btn btn-success" disabled="disabled">Add</button>
+                            <span>You are not allowed to add candidate now</span>
+                        {% else %}
+                            <button type="submit" class="btn btn-success">Add</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

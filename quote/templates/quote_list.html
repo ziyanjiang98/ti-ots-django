@@ -1,0 +1,45 @@
+{% extends 'supplier_basic.html' %}
+
+{% block title %}Quote List{% endblock %}
+
+{% block content %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                Quote List
+            </h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Name</th>
+                    <th>Order Amount</th>
+                    <th>Order Date</th>
+                    <th>Template</th>
+                    <th>Operation</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for order in order_list %}
+                    <tr>
+                        <th scope="row">{{ order.id }}</th>
+                        <td>{{ order.order_name }}</td>
+                        <td>{{ order.order_amount }}</td>
+                        <td>{{ order.order_date }}</td>
+                        <td>
+                            {{ order.template }}
+                        </td>
+                        <td>
+                            <a href="/supplier/quote/bid-on-order?oid={{ order.id }}">Bid</a><br/>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

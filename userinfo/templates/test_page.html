@@ -1,0 +1,18 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Page</title>
+    <link rel="stylesheet" href="{% static '../../static/plugin/bootstrap-3.4.1-dist/css/bootstrap.css' %}">
+</head>
+<body>
+    <h1 align="center">Test Page</h1>
+    <input type="text" class="btn btn-primary" value="TestButton "/><br/>
+    <img src="{% static '../../static/img/ti-logo.png' %}" width="400px" height="200px">
+
+    <script src="{% static '../../static/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static '../../static/plugin/bootstrap-3.4.1-dist/js/bootstrap.js' %}"></script>
+</body>
+</html>

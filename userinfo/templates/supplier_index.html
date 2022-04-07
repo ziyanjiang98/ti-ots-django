@@ -1,0 +1,24 @@
+{% extends 'supplier_basic.html' %}
+
+{% block title %}Supplier Dashboard{% endblock %}
+
+{% block content %}
+    <h3>Dashboard</h3>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">User</h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <a class="list-group-item" href="/supplier/quote/quote-list/">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    My candidate order
+                </a>
+                <a class="list-group-item" href="/supplier/quote/my-order/">
+                    <span class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+                    My quote
+                </a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

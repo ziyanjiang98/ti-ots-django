@@ -1,0 +1,68 @@
+{% extends 'supplier_basic.html' %}
+
+{% block title %}Bid{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Quote List</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Name</th>
+                    <th>Order Amount</th>
+                    <th>Order Date</th>
+                    <th>My Bid</th>
+                    <th>Last Bid Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">{{ order.id }}</th>
+                    <td>{{ order.order_name }}</td>
+                    <td>{{ order.order_amount }}</td>
+                    <td>{{ order.order_date }}</td>
+                    <td>
+                        {% if bid %}
+                            {{ bid.bid_price }}
+                        {% else %}
+                            No Bid
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if bid %}
+                            {{ bid.bid_datetime }}
+                        {% else %}
+                            No Bid
+                        {% endif %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <table class="table table-bordered">
+                <thead>
+                <td>Template Information</td>
+                </thead>
+                <tr>
+                    <td>{{ order.template.template_json }}</td>
+                </tr>
+            </table>
+            <br>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.order_id }}
+                {{ form.bid_price.label }}
+                {{ form.bid_price }}
+                {% if form.bid_price.errors %}
+                    <div class="alert alert-danger" role="alert">{{ form.bid_price.errors }}</div>
+                {% endif %}
+                <br/>
+                <input class="btn btn-success" type="submit" value="Bid">
+            </form>
+        </div>
+    </div>
+{% endblock %}

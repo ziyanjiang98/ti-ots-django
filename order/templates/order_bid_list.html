@@ -1,0 +1,32 @@
+{% extends 'engineer_basic.html' %}
+
+{% block title %}Order Bid List{% endblock %}
+
+{% block content %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+            Order Bid List
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Supplier ID</th>
+                <th>Bid Datetime</th>
+                <th>Bid Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for bid in bid_list %}
+                <tr>
+                    <th scope="row">{{ bid.order.id }}</th>
+                    <td>{{ bid.supplier }}</td>
+                    <td>{{ bid.bid_datetime }}</td>
+                    <td>{{ bid.bid_price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
