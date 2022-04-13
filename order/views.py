@@ -130,8 +130,13 @@ def order_detail(request, *args, **kwargs):
 
 
 def add_candidate(request, *args, **kwargs):
-    order_id = int(request.POST.get("oid"))
-    supplier_id = int(request.POST.get("sid"))
+    order_id = request.POST.get("oid")
+    supplier_id = request.POST.get("sid")
+    if order_id is None or supplier_id is None:
+        add_session_msg(request, "danger", "supplier not exist")
+        return redirect("/engineer/order/order-detail?oid=" + str(order_id))
+    order_id = int(order_id)
+    supplier_id = int(supplier_id)
     order = Order.objects.filter(id=order_id).first()
     supplier = Supplier.objects.filter(id=supplier_id).first()
     if order is None or supplier is None:

@@ -5,7 +5,11 @@ from django.shortcuts import HttpResponse, redirect, render
 class AuthMiddleware(MiddlewareMixin):
     def process_request(self, request):
         url = request.path_info
-        if url == "/login/" or url == "/logout/" or url == "/engineer/register/" or url == "/supplier/register/":
+        if url == "/login/" \
+                or url == "/logout/" \
+                or url == "/engineer/register/" \
+                or url == "/supplier/register/" \
+                or url == "/":
             return
         info = request.session.get("info")
         if not info:

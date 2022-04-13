@@ -26,6 +26,7 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     re_path(r'^media/(?P<path>.*)$', serve, {"document_root": settings.MEDIA_ROOT}, name='media'),
     # common urls
+    path('', userinfo.views.login),
     path('login/', userinfo.views.login),
     path('logout/', userinfo.views.logout),
     path('', userinfo.views.login),
